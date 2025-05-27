@@ -11,7 +11,6 @@ let billValue = 0;
 let peopleValue = 0;
 let tipValue = 0;
 
-// Inicialmente ocultar alert
 alertMessage.style.display = "none";
 
 billInput.addEventListener("input", () => {
@@ -21,13 +20,14 @@ billInput.addEventListener("input", () => {
 });
 
 peopleInput.addEventListener("input", () => {
-  if (peopleInput.value === "") {
-    // Si está vacío, no mostrar alerta ni error
+  const val = peopleInput.value.trim();
+
+  if (val === "") {
     alertMessage.style.display = "none";
     peopleInput.classList.remove("input-error");
     peopleValue = 0;
   } else {
-    peopleValue = parseInt(peopleInput.value);
+    peopleValue = parseInt(val, 10);
 
     if (isNaN(peopleValue) || peopleValue <= 0) {
       alertMessage.style.display = "block";
@@ -40,7 +40,6 @@ peopleInput.addEventListener("input", () => {
   calculateTip();
 });
 
-// Al hacer clic en un botón de propina
 tipButtons.forEach((button) => {
   button.addEventListener("click", () => {
     tipValue = parseFloat(button.innerHTML) / 100;
@@ -55,7 +54,6 @@ tipButtons.forEach((button) => {
   });
 });
 
-// Al escribir en input personalizado
 customTipInput.addEventListener("input", () => {
   const customValue = parseFloat(customTipInput.value);
   if (!isNaN(customValue) && customValue >= 0) {
@@ -65,16 +63,18 @@ customTipInput.addEventListener("input", () => {
     customTipInput.classList.add("active");
 
     calculateTip();
+  } else if (customTipInput.value.trim() === "") {
+    tipValue = 0;
+    customTipInput.classList.remove("active");
+    calculateTip();
   }
 });
 
-// Al hacer clic en el input personalizado
 customTipInput.addEventListener("click", () => {
   tipButtons.forEach((btn) => btn.classList.remove("active"));
   customTipInput.classList.add("active");
 });
 
-// Escuchar clics en todo el documento para quitar .active si se hace clic fuera
 document.addEventListener("click", (event) => {
   const isTipButton = event.target.classList.contains("tip-button");
   const isCustomInput = event.target === customTipInput;
@@ -92,11 +92,11 @@ function calculateTip() {
     let tipAmount = (billValue * tipValue) / peopleValue;
     let totalAmount = (billValue + billValue * tipValue) / peopleValue;
 
-    tipAmountDisplay.innerHTML = `$${tipAmount.toFixed(2)}`;
-    totalDisplay.innerHTML = `$${totalAmount.toFixed(2)}`;
+    tipAmountDisplay.textContent = `$${tipAmount.toFixed(2)}`;
+    totalDisplay.textContent = `$${totalAmount.toFixed(2)}`;
   } else {
-    tipAmountDisplay.innerHTML = "$0.00";
-    totalDisplay.innerHTML = "$0.00";
+    tipAmountDisplay.textContent = "$0.00";
+    totalDisplay.textContent = "$0.00";
   }
 }
 
@@ -104,8 +104,8 @@ resetButton.addEventListener("click", () => {
   billInput.value = "";
   peopleInput.value = "";
   customTipInput.value = "";
-  tipAmountDisplay.innerHTML = "$0.00";
-  totalDisplay.innerHTML = "$0.00";
+  tipAmountDisplay.textContent = "$0.00";
+  totalDisplay.textContent = "$0.00";
   alertMessage.style.display = "none";
   peopleInput.classList.remove("input-error");
   billValue = 0;
