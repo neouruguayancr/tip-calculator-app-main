@@ -11,20 +11,31 @@ let billValue = 0;
 let peopleValue = 0;
 let tipValue = 0;
 
+// Inicialmente ocultar alert
+alertMessage.style.display = "none";
+
 billInput.addEventListener("input", () => {
   billValue = parseFloat(billInput.value);
+  if (isNaN(billValue) || billValue < 0) billValue = 0;
   calculateTip();
 });
 
 peopleInput.addEventListener("input", () => {
-  peopleValue = parseInt(peopleInput.value);
-
-  if (peopleValue <= 0 || isNaN(peopleValue)) {
-    alertMessage.style.display = "block";
-    peopleInput.classList.add("input-error");
-  } else {
+  if (peopleInput.value === "") {
+    // Si está vacío, no mostrar alerta ni error
     alertMessage.style.display = "none";
     peopleInput.classList.remove("input-error");
+    peopleValue = 0;
+  } else {
+    peopleValue = parseInt(peopleInput.value);
+
+    if (isNaN(peopleValue) || peopleValue <= 0) {
+      alertMessage.style.display = "block";
+      peopleInput.classList.add("input-error");
+    } else {
+      alertMessage.style.display = "none";
+      peopleInput.classList.remove("input-error");
+    }
   }
   calculateTip();
 });
@@ -35,7 +46,6 @@ tipButtons.forEach((button) => {
     tipValue = parseFloat(button.innerHTML) / 100;
     customTipInput.value = "";
 
-    // Sacar clase .active de todos los botones e input
     tipButtons.forEach((btn) => btn.classList.remove("active"));
     customTipInput.classList.remove("active");
 
@@ -45,11 +55,22 @@ tipButtons.forEach((button) => {
   });
 });
 
+// Al escribir en input personalizado
+customTipInput.addEventListener("input", () => {
+  const customValue = parseFloat(customTipInput.value);
+  if (!isNaN(customValue) && customValue >= 0) {
+    tipValue = customValue / 100;
+
+    tipButtons.forEach((btn) => btn.classList.remove("active"));
+    customTipInput.classList.add("active");
+
+    calculateTip();
+  }
+});
+
 // Al hacer clic en el input personalizado
 customTipInput.addEventListener("click", () => {
-  // Sacar .active de los botones
   tipButtons.forEach((btn) => btn.classList.remove("active"));
-
   customTipInput.classList.add("active");
 });
 
@@ -60,7 +81,9 @@ document.addEventListener("click", (event) => {
 
   if (!isTipButton && !isCustomInput) {
     tipButtons.forEach((btn) => btn.classList.remove("active"));
-    customTipInput.classList.remove("active");
+    if (document.activeElement !== customTipInput) {
+      customTipInput.classList.remove("active");
+    }
   }
 });
 
@@ -71,6 +94,9 @@ function calculateTip() {
 
     tipAmountDisplay.innerHTML = `$${tipAmount.toFixed(2)}`;
     totalDisplay.innerHTML = `$${totalAmount.toFixed(2)}`;
+  } else {
+    tipAmountDisplay.innerHTML = "$0.00";
+    totalDisplay.innerHTML = "$0.00";
   }
 }
 
@@ -86,9 +112,6 @@ resetButton.addEventListener("click", () => {
   peopleValue = 0;
   tipValue = 0;
 
-  // Quitar clase .active de botones e input
-  tipButtons.forEach((btn) => {
-    btn.classList.remove("active");
-  });
+  tipButtons.forEach((btn) => btn.classList.remove("active"));
   customTipInput.classList.remove("active");
 });
