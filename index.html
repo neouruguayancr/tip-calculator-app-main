@@ -11,17 +11,17 @@
   </head>
   <body>
     <main>
-      <div class="logotype">
+      <div class="app-logo">
         <img src="images/logo.svg" alt="logo" />
       </div>
-      <div class="container">
-        <div class="cards-wrapper">
-          <div class="container-border">
+      <div class="app-container">
+        <div class="app__cards">
+          <div class="app__card-wrapper">
             <div class="card">
-              <div class="input">
-                <label class="bill-label" for="bill">Bill</label>
+              <div class="card__input-group">
+                <label class="input-group__label" for="bill">Bill</label>
                 <input id="bill" name="bill"
-                  class="bill-input input-control"
+                  class="input-group__control input-control"
                   type="text"
                   placeholder="0" />
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -31,10 +31,10 @@
                     d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z" />
                 </svg>
               </div>
-              <div class="input">
+              <div class="card__input-group">
                 <label for="tip">Select Tip %</label>
-                <div class="tip-section">
-                  <div class="select-grid">
+                <div class="card__tip-section">
+                  <div class="tip-section__grid">
                     <button id="5%"
                       class="tip-button">5%</button>
                     <button id="10%"
@@ -51,12 +51,12 @@
                   </div>
                 </div>
               </div>
-              <div class="people-main">
-                <div class="people-flex">
+              <div class="card__people">
+                <div class="people__header">
                   <label for="people">Number of People</label>
                   <label for class="alert">Can't be zero</label>
                 </div>
-                <input class="people-input input-control" type="text"
+                <input class="people__input input-control" type="text"
                   name="people" id="people" placeholder="0" />
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                   fill="currentColor"
@@ -67,28 +67,29 @@
               </div>
             </div>
           </div>
-          <div class="card-right">
-            <div class="amounts-card">
-              <div class="flex-span">
+          <div class="summary-card">
+            <div class="summary-card__amounts">
+              <div class="summary-card__row">
                 <div>
-                  <span class="amount-text">Tip Amount</span>
-                  <span class="person-text">/ person</span>
+                  <span class="summary-card__label">Tip Amount</span>
+                  <span class="summary-card__subtext">/ person</span>
                 </div>
                 <div>
-                  <h1 id="tip-amount" class="text-cyan">$0.00</h1>
+                  <h1 id="tip-amount"
+                    class="summary-card__value--cyan">$0.00</h1>
                 </div>
               </div>
-              <div class="flex-total">
+              <div class="summary-card__row--total">
                 <div>
-                  <span class="text-white">Total</span>
+                  <span class="summary-card__label--white">Total</span>
                   <span>/ person</span>
                 </div>
                 <div>
-                  <h1 id="total" class="text-cyan">$0.00</h1>
+                  <h1 id="total" class="summary-card__value--cyan">$0.00</h1>
                 </div>
               </div>
               <button id="btn-reset"
-                class="btn-reset">RESET</button>
+                class="summary-card__button--reset">RESET</button>
             </div>
           </div>
         </div>
